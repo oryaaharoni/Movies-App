@@ -1,0 +1,69 @@
+[
+    {
+        "Id": 1,
+        "Title": "The Grand Budapest Hotel",
+        "Category": "Comedy",
+        "Rating": 8
+      },
+    {
+      "Id": 2,
+      "Title": "The Dark Knight",
+      "Category": "Action",
+      "Rating": 10
+    },
+    {
+      "Id": 3,
+      "Title": "Interstellar",
+      "Category": "SciFi",
+      "Rating": 8
+    },
+    {
+      "Id": 4,
+      "Title": "The Shawshank Redemption",
+      "Category": "Drama",
+      "Rating": 10
+    },
+    {
+      "Id": 5,
+      "Title": "Pulp Fiction",
+      "Category": "Crime",
+      "Rating": 9
+    },
+    {
+        "Id": 6,
+        "Title": "The Lord of the Rings: The Fellowship of the Ring",
+        "Category": "Fantasy",
+        "Rating": 9
+      },
+    {
+      "Id": 7,
+      "Title": "Forrest Gump",
+      "Category": "Romance",
+      "Rating": 9
+    },
+    {
+      "Id": 8,
+      "Title": "The Godfather",
+      "Category": "Crime",
+      "Rating": 10
+    },
+    {
+      "Id": 9,
+      "Title": "Jurassic Park",
+      "Category": "Adventure",
+      "Rating": 8
+    },
+    {
+      "Id": 10,
+      "Title": "Avatar",
+      "Category": "Adventure",
+      "Rating": 8
+    },
+    {
+        "Id": 11,
+        "Title": "The Prestige",
+        "Category": "Mystery",
+        "Rating": 9
+      }
+  ]
+  
