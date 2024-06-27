@@ -9,11 +9,11 @@ using Microsoft.AspNetCore.Mvc;
 namespace backend.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class MovieController : ControllerBase
     {
         private readonly DataRepository _dataRepository;
-
+        private static int _counter = 12;
         public MovieController(DataRepository dataRepository)
         {
             _dataRepository = dataRepository;
@@ -22,14 +22,13 @@ namespace backend.Controllers
         [HttpGet("")]
         public IEnumerable<Movie> GetMovies()
         {
-            // var movies =_dataRepository.readFromJson();
+            var movies = _dataRepository.readFromJson();
+            return movies;
             // return movies == null ? NotFound() : Ok(movies);
-            return _dataRepository.readFromJson();
+            // return _dataRepository.readFromJson();
         }
-            
-        [HttpPost("")]
 
-        //  public async Task<IActionResult> AddMovie([FromBody] Movie movie)
+        [HttpPost("")]
         public IActionResult AddMovie([FromBody] Movie movie)
         {
 
@@ -44,27 +43,25 @@ namespace backend.Controllers
             {
                 return Conflict("Movie already exists");
             }
-
+            movie.Id = _counter++;
             movies.Add(movie);
 
             _dataRepository.WriteToJson(movies);
 
-            //TODO: maybe change to return list
             return Ok(movie);
         }
 
-
-        [HttpPut("{id}")]
-        public IActionResult UpdateMovie(int id, Movie updateMovie)
+        [HttpPut("")]
+        public IActionResult UpdateMovie([FromBody] Movie updateMovie)
         {
             //check if update movie is null
             //maybe remove
-            if(updateMovie == null) return BadRequest("movie cannot be null");
-            
+            if (updateMovie == null) return BadRequest("movie cannot be null");
+
             var movies = _dataRepository.readFromJson();
-            var currentMovieIndex = movies.FindIndex((m) => m.Id == id);
+            var currentMovieIndex = movies.FindIndex((m) => m.Id == updateMovie.Id);
             if (currentMovieIndex < 0) return NotFound();
-            
+
             movies[currentMovieIndex].Title = updateMovie.Title;
             movies[currentMovieIndex].Category = updateMovie.Category;
             movies[currentMovieIndex].Rating = updateMovie.Rating;
@@ -74,7 +71,7 @@ namespace backend.Controllers
 
         }
 
-        [HttpDelete("")]
+        [HttpDelete("{id}")]
         public IActionResult DeleteMovie(int id)
         {
             var movies = _dataRepository.readFromJson();
@@ -86,6 +83,14 @@ namespace backend.Controllers
             _dataRepository.WriteToJson(movies);
             return Ok(currentMovie);
 
+        }
+
+
+        [HttpGet("categories")]
+        public ActionResult<IEnumerable<string>> GetCategories()
+        {
+            var categories = Enum.GetNames(typeof(Category)).ToList();
+            return Ok(categories);
         }
     }
 }

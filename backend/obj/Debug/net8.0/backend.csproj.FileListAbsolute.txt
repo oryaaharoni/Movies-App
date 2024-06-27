@@ -33,4 +33,3 @@ C:\Users\Shelly Aharoni\Desktop\MoviesApp\backend\obj\Debug\net8.0\refint\backen
 C:\Users\Shelly Aharoni\Desktop\MoviesApp\backend\obj\Debug\net8.0\backend.pdb
 C:\Users\Shelly Aharoni\Desktop\MoviesApp\backend\obj\Debug\net8.0\backend.genruntimeconfig.cache
 C:\Users\Shelly Aharoni\Desktop\MoviesApp\backend\obj\Debug\net8.0\ref\backend.dll
-C:\Users\Shelly Aharoni\Desktop\MoviesApp\backend\bin\Debug\net8.0\Newtonsoft.Json.dll

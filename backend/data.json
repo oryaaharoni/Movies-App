@@ -21,7 +21,7 @@
     "Id": 4,
     "Title": "The Shawshank Redemption",
     "Category": 3,
-    "Rating": 10
+    "Rating": 9
   },
   {
     "Id": 5,
@@ -68,12 +68,6 @@
   {
     "Id": 12,
     "Title": "Back to the Future",
-    "Category": 1,
-    "Rating": 3
-  },
-  {
-    "Id": 14,
-    "Title": "qweee",
     "Category": 1,
     "Rating": 3
   }
