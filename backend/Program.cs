@@ -1,6 +1,9 @@
+using backend.Repository;
+
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddSingleton(sp => new DataRepository("data.json"));
 
-
+builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -12,7 +15,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+// app.UseCors(option=> option.WithOrigins("*").AllowAnyMethod().AllowAnyHeader());
+
+app.MapControllers();
+
+// app.UseHttpsRedirection();
 
 
 app.Run();
