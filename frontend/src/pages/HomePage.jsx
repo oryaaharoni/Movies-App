@@ -1,6 +1,15 @@
 import Card from "../components/Card/Card";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import styled from "styled-components";
+
+const Container = styled.div`
+  display: flex;
+  gap: 15px;
+  padding: 10px;
+  flex-wrap: wrap;
+  background-color:#ffffff;
+`;
 
 function HomePage() {
   const [movies, setMovies] = useState([]);
@@ -13,7 +22,6 @@ function HomePage() {
 
       setMovies(sortedMovies);
       // setMovies(data);
-      
     } catch (error) {
       console.log(error);
     }
@@ -24,13 +32,11 @@ function HomePage() {
   }, []);
 
   return (
-    <>
-      <div>
-        {movies.map((movie, index) => (
-          <Card item={movie} key={index}></Card>
-        ))}
-      </div>
-    </>
+    <Container>
+      {movies.map((movie, index) => (
+        <Card item={movie} key={index}></Card>
+      ))}
+    </Container>
   );
 }
 export default HomePage;

@@ -3,7 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 function AddPage() {
-  // var categories = ["2", "3", "5"];
+  
   const [categories, setCategories] = useState([]);
 
   const [movie, setMovie] = useState({
@@ -12,13 +12,14 @@ function AddPage() {
     Rating: "",
   });
 
-  // temp -check
+  
   useEffect(() => {
     const fetchCategories = async () => {
       try {
         const { data } = await axios.get("Movie/categories");
         setCategories(data);
-      } catch (error) {
+      } 
+      catch (error) {
         console.error("Error fetching categories:", error);
       }
     };
@@ -33,23 +34,33 @@ function AddPage() {
     }));
   };
 
+  const findIndexCategory = () => {
+    const index = categories.findIndex((c) => c === movie.Category);
+    movie.Category = index;
+  };
+
   const submitHandler = async (e) => {
     e.preventDefault();
-    console.log(movie.Title);
-    console.log(movie.Category);
-    console.log(movie.Rating);
+    // console.log(movie.Title);
+    // console.log(movie.Category);
+    // console.log(movie.Rating);
+    
+    findIndexCategory();
 
     try {
-      const { data } = await axios
-        .post("Movie", {
+      const { data } = await axios.post("Movie", {
           Title: movie.Title,
-          Category: parseInt(movie.Category, 10),
+          Category: movie.Category,
           Rating: parseInt(movie.Rating, 10),
         })
-        .then(alert("Movie added successfully"))
-        .catch("failed to add movie");
+        // .then(alert("Movie added successfully"))
+        // .catch("failed to add movie");
       console.log(data);
-    } catch (error) {
+      
+
+        //add to empty movie
+    } 
+    catch (error) {
       console.log(error);
     }
   };

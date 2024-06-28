@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using backend.Models;
 using backend.Repository;
+using backend.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace backend.Controllers
@@ -12,77 +13,57 @@ namespace backend.Controllers
     [Route("[controller]")]
     public class MovieController : ControllerBase
     {
-        private readonly DataRepository _dataRepository;
+        
         private static int _counter = 12;
-        public MovieController(DataRepository dataRepository)
+
+        private readonly MovieService _movieService;
+        public MovieController(MovieService movieService)
         {
-            _dataRepository = dataRepository;
+            _movieService = movieService;
         }
+        
 
         [HttpGet("")]
         public IEnumerable<Movie> GetMovies()
         {
-            var movies = _dataRepository.readFromJson();
-            return movies;
-            // return movies == null ? NotFound() : Ok(movies);
-            // return _dataRepository.readFromJson();
+
+            return _movieService.GetMovies();
         }
 
         [HttpPost("")]
         public IActionResult AddMovie([FromBody] Movie movie)
         {
 
-            //not work - מקבל נל
-            if (movie.Title == null)
+            // //not work - מקבל נל
+            if (movie == null)
             {
-                // StatusCode(400); 
+                
                 return BadRequest("Movie cannot be null");
             }
-            List<Movie> movies = _dataRepository.readFromJson();
-            if (movies.Any(m => m.Title == movie.Title))
-            {
-                return Conflict("Movie already exists");
-            }
-            movie.Id = _counter++;
-            movies.Add(movie);
-
-            _dataRepository.WriteToJson(movies);
-
-            return Ok(movie);
+            var m = _movieService.AddMovie(movie);
+            if (m == null) return Conflict("Movie already exists");
+            else return Ok(m);
         }
 
         [HttpPut("")]
-        public IActionResult UpdateMovie([FromBody] Movie updateMovie)
+        public IActionResult UpdateMovie([FromBody] Movie movie)
         {
             //check if update movie is null
             //maybe remove
-            if (updateMovie == null) return BadRequest("movie cannot be null");
+            if (movie == null) return BadRequest("movie cannot be null");
 
-            var movies = _dataRepository.readFromJson();
-            var currentMovieIndex = movies.FindIndex((m) => m.Id == updateMovie.Id);
-            if (currentMovieIndex < 0) return NotFound();
-
-            movies[currentMovieIndex].Title = updateMovie.Title;
-            movies[currentMovieIndex].Category = updateMovie.Category;
-            movies[currentMovieIndex].Rating = updateMovie.Rating;
-
-            _dataRepository.WriteToJson(movies);
-            return Ok(movies[currentMovieIndex]);
+            var updateMovie = _movieService.UpdateMovie(movie);
+            if (updateMovie == null) return NotFound();
+            else return Ok(updateMovie);
 
         }
 
         [HttpDelete("{id}")]
         public IActionResult DeleteMovie(int id)
         {
-            var movies = _dataRepository.readFromJson();
-            var currentMovie = movies.Find((m) => m.Id == id);
-
-            if (currentMovie == null) return NotFound();
-
-            movies.Remove(currentMovie);
-            _dataRepository.WriteToJson(movies);
-            return Ok(currentMovie);
-
+            var movie = _movieService.DeleteMovie(id);
+            if (movie == null) return NotFound();
+            else return Ok(movie);
         }
 
 
@@ -91,6 +72,20 @@ namespace backend.Controllers
         {
             var categories = Enum.GetNames(typeof(Category)).ToList();
             return Ok(categories);
+        }
+
+
+        [HttpGet("{category}")]
+        public ActionResult<string> ConvertToEnumCategory(string category)
+        {
+            var categories = Enum.GetNames(typeof(Category)).ToList();
+            if (categories.Any(c => c == category)){
+                
+                return Ok(category);
+            }
+            else return NotFound("jjjjjjjjjjjjj");
+           
+            
         }
     }
 }

@@ -1,7 +1,9 @@
 using backend.Repository;
+using backend.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSingleton(sp => new DataRepository("data.json"));
+builder.Services.AddScoped<MovieService>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

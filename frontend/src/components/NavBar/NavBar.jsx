@@ -1,22 +1,31 @@
-import "./NavBar.css";
+import styled from "styled-components";
+
+const Navbar = styled.div`
+  font-family: cursive;
+  display: flex;
+  background-color: #333;
+  padding: 20px;
+  gap: 10px;
+`;
+
+const Name = styled.a`
+  text-decoration: none;
+  color: white;
+  font-family: math;
+
+  &:hover {
+    color: #799ac5;
+  }
+`;
 
 function NavBar() {
   return (
-    <>
-      <ul>
-        <li>
-          <a className="active" href="/">
-            Home
-          </a>
-        </li>
-        <li>
-          <a href="/add-movie">Add Movie</a>
-        </li>
-        <li>
-          <a href="#contact">Contact</a>
-        </li>
-      </ul>
-    </>
+    <Navbar>
+      <Name className="active" href="/">
+        Home
+      </Name>
+      <Name href="/add-movie">Add Movie</Name>
+    </Navbar>
   );
 }
 export default NavBar;
