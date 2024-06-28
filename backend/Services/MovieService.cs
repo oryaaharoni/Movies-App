@@ -10,7 +10,7 @@ namespace backend.Services
     public class MovieService
     {
         private readonly DataRepository _dataRepository;
-        private static int _counter = 12;
+        // private static int _counter = 12;
         public MovieService(DataRepository dataRepository)
         {
             _dataRepository = dataRepository;
@@ -30,7 +30,7 @@ namespace backend.Services
                 return null;
             }
 
-            movie.Id = _counter++;
+            movie.Id = Guid.NewGuid();
             movies.Add(movie);
 
             _dataRepository.WriteToJson(movies);
@@ -56,7 +56,7 @@ namespace backend.Services
         }
 
 
-        public Movie DeleteMovie(int id)
+        public Movie DeleteMovie(Guid id)
         {
             var movies = _dataRepository.readFromJson();
             var currentMovie = movies.Find((m) => m.Id == id);

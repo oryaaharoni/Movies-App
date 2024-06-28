@@ -9,9 +9,7 @@ namespace backend.Models
 {
     public class Movie
     {
-        // [JsonIgnore]
-        // [Key]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         [Required]
         [MinLength(2)]
@@ -21,7 +19,6 @@ namespace backend.Models
         [EnumDataType(typeof(Category), ErrorMessage = "Invalid category.")]
         public Category Category { get; set; }
 
-        // [Range(1, 10)]
         public int Rating { get; set; }
     }
 }

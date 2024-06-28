@@ -13,9 +13,6 @@ namespace backend.Controllers
     [Route("[controller]")]
     public class MovieController : ControllerBase
     {
-        
-        private static int _counter = 12;
-
         private readonly MovieService _movieService;
         public MovieController(MovieService movieService)
         {
@@ -26,14 +23,12 @@ namespace backend.Controllers
         [HttpGet("")]
         public IEnumerable<Movie> GetMovies()
         {
-
             return _movieService.GetMovies();
         }
 
         [HttpPost("")]
         public IActionResult AddMovie([FromBody] Movie movie)
         {
-
             // //not work - מקבל נל
             if (movie == null)
             {
@@ -55,17 +50,15 @@ namespace backend.Controllers
             var updateMovie = _movieService.UpdateMovie(movie);
             if (updateMovie == null) return NotFound();
             else return Ok(updateMovie);
-
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeleteMovie(int id)
+        public IActionResult DeleteMovie(Guid id)
         {
             var movie = _movieService.DeleteMovie(id);
             if (movie == null) return NotFound();
             else return Ok(movie);
         }
-
 
         [HttpGet("categories")]
         public ActionResult<IEnumerable<string>> GetCategories()
@@ -73,7 +66,6 @@ namespace backend.Controllers
             var categories = Enum.GetNames(typeof(Category)).ToList();
             return Ok(categories);
         }
-
 
         [HttpGet("{category}")]
         public ActionResult<string> ConvertToEnumCategory(string category)
@@ -83,9 +75,7 @@ namespace backend.Controllers
                 
                 return Ok(category);
             }
-            else return NotFound("jjjjjjjjjjjjj");
-           
-            
+            else return NotFound(""); 
         }
     }
 }
