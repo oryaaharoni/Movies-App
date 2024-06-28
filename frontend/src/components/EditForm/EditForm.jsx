@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { useRef } from "react";
 import axios from "axios";
 import styled from "styled-components";
-import { useEffect, useState } from "react";
+import { findIndexCategory } from "../../utils/utils";
 
 const Container = styled.div`
   display: flex;
@@ -59,41 +59,22 @@ const EditBtn = styled.button`
   }
 `;
 
-function EditForm({ item }) {
-  const [categories, setCategories] = useState([]);
-
+function EditForm({ item, categories }) {
   const titleRef = useRef(item.title);
   const categoryRef = useRef(item.category);
   const ratingRef = useRef(item.rating);
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const { data } = await axios.get("Movie/categories");
-        setCategories(data);
-      } catch (error) {
-        console.error("Error fetching categories:", error);
-      }
-    };
-    fetchCategories();
-  }, []);
-
-  const findIndexCategory = (categoryName) => {
-    const index = categories.findIndex((c) => c === categoryName);
-    return index;
-  };
-
   const editHandler = async (e) => {
     e.preventDefault();
 
-    findIndexCategory(categoryRef.current.value);
-    console.log(categoryRef.current.value);
+    const ctgIndex = findIndexCategory(categories, categoryRef.current.value);
+
     try {
       const { data } = await axios
         .put("Movie", {
           Id: item.id,
           Title: titleRef.current.value,
-          Category: parseInt(categoryRef.current.value, 10),
+          Category: ctgIndex,
           Rating: parseInt(ratingRef.current.value, 10),
         })
         .then(alert("Movie edited successfully"))
@@ -154,5 +135,10 @@ function EditForm({ item }) {
     </>
   );
 }
-EditForm.propTypes = { item: PropTypes.object.isRequired };
+
+EditForm.propTypes = {
+  item: PropTypes.object.isRequired,
+  categories: PropTypes.array,
+};
+
 export default EditForm;

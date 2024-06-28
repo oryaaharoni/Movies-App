@@ -4,6 +4,7 @@ import EditForm from "../EditForm/EditForm";
 import axios from "axios";
 
 import styled from "styled-components";
+import { indexToCategory } from "../../utils/utils";
 
 const Container = styled.div`
   display: flex;
@@ -41,23 +42,23 @@ const Buttons = styled.div`
 `;
 
 const BackBtn = styled.button`
-   background-color: #ababab;
-   border-radius: 5px;
+  background-color: #ababab;
+  border-radius: 5px;
 `;
 
-function Card({ item }) {
+function Card({ item, categories }) {
   const [edit, setEdit] = useState(false);
-
+  console.log({ item });
+  console.log({ categories });
   const deleteHandler = async () => {
-    console.log(item.id);
     try {
-      const { data } = await axios.delete(`Movie/${item.id}`)
-      .then(alert('Movie deleted successfully'))
-      .catch('failed to delete movie');
+      const { data } = await axios
+        .delete(`Movie/${item.id}`)
+        .then(alert("Movie deleted successfully"))
+        .catch("failed to delete movie");
 
       console.log(data);
-    } 
-    catch (error) {
+    } catch (error) {
       console.log(error);
     }
   };
@@ -67,7 +68,7 @@ function Card({ item }) {
       <Container>
         <Image src="https://img.freepik.com/free-vector/cinema-realistic-poster-with-illuminated-bucket-popcorn-drink-3d-glasses-reel-tickets-blue-background-with-tapes-vector-illustration_1284-77070.jpg" />
         <h2>{item.title}</h2>
-        <h3>{item.category}</h3>
+        <h3>{indexToCategory(categories, item.category)}</h3>
         <p>
           Rating: <strong style={{ color: "green" }}>{item.rating}</strong>
         </p>

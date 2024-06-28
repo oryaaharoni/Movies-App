@@ -18,7 +18,7 @@ namespace backend.Controllers
         {
             _movieService = movieService;
         }
-        
+
 
         [HttpGet("")]
         public IEnumerable<Movie> GetMovies()
@@ -32,7 +32,7 @@ namespace backend.Controllers
             // //not work - מקבל נל
             if (movie == null)
             {
-                
+
                 return BadRequest("Movie cannot be null");
             }
             var m = _movieService.AddMovie(movie);
@@ -71,11 +71,12 @@ namespace backend.Controllers
         // public ActionResult<string> ConvertToEnumCategory(string category)
         // {
         //     var categories = Enum.GetNames(typeof(Category)).ToList();
-        //     if (categories.Any(c => c == category)){
-                
+        //     if (categories.Any(c => c == category))
+        //     {
+
         //         return Ok(category);
         //     }
-        //     else return NotFound(""); 
+        //     else return NotFound("");
         // }
     }
 }

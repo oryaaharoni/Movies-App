@@ -1,83 +1,71 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
+import { findIndexCategory } from "../utils/utils";
+import PropTypes from "prop-types";
 
 const Container = styled.div`
-    max-width: 600px;
-    margin: 50px auto;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    background-color: #f9f9f9;
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #f9f9f9;
 `;
 
 const Title = styled.h1`
-    text-align: center;
-    margin-bottom: 20px;
+  text-align: center;
+  margin-bottom: 20px;
 `;
 
 const Label = styled.label`
-    display: block;
-    margin-bottom: 15px;
-    font-weight: bold;
+  display: block;
+  margin-bottom: 15px;
+  font-weight: bold;
 `;
 
 const Input = styled.input`
-    width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
 `;
 
 const Select = styled.select`
-    width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
 `;
 
 const SubmitBtn = styled.button`
-    width: 100%;
-    background-color: #4CAF50;
-    color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
+  width: 100%;
+  background-color: #4caf50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
 
-    &:hover {
-        background-color: #45a049;
-    }
+  &:hover {
+    background-color: #45a049;
+  }
 `;
 
-function AddPage() {
-  const [categories, setCategories] = useState([]);
-
+function AddPage({ categories }) {
   const [movie, setMovie] = useState({
     Title: "",
     Category: "",
     Rating: "",
   });
-
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const { data } = await axios.get("Movie/categories");
-        setCategories(data);
-      } catch (error) {
-        console.error("Error fetching categories:", error);
-      }
-    };
-    fetchCategories();
-  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -87,20 +75,15 @@ function AddPage() {
     }));
   };
 
-  const findIndexCategory = () => {
-    const index = categories.findIndex((c) => c == movie.Category);
-    movie.Category = index;
-  };
-
   const submitHandler = async (e) => {
     e.preventDefault();
-    findIndexCategory();
+    const cagtIndex = findIndexCategory(categories, movie.Category);
 
     try {
       const { data } = await axios
         .post("Movie", {
           Title: movie.Title,
-          Category: movie.Category,
+          Category: cagtIndex,
           Rating: parseInt(movie.Rating, 10),
         })
         .then(alert("Movie added successfully"))
@@ -170,4 +153,7 @@ function AddPage() {
     </>
   );
 }
+
+AddPage.propTypes = { categories: PropTypes.array };
+
 export default AddPage;
