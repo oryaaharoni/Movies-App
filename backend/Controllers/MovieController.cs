@@ -29,7 +29,6 @@ namespace backend.Controllers
         [HttpPost("")]
         public IActionResult AddMovie([FromBody] Movie movie)
         {
-            // //not work - מקבל נל
             if (movie == null)
             {
 
@@ -43,8 +42,7 @@ namespace backend.Controllers
         [HttpPut("")]
         public IActionResult UpdateMovie([FromBody] Movie movie)
         {
-            //check if update movie is null
-            //maybe remove
+
             if (movie == null) return BadRequest("movie cannot be null");
 
             var updateMovie = _movieService.UpdateMovie(movie);
@@ -67,16 +65,5 @@ namespace backend.Controllers
             return Ok(categories);
         }
 
-        // [HttpGet("{category}")]
-        // public ActionResult<string> ConvertToEnumCategory(string category)
-        // {
-        //     var categories = Enum.GetNames(typeof(Category)).ToList();
-        //     if (categories.Any(c => c == category))
-        //     {
-
-        //         return Ok(category);
-        //     }
-        //     else return NotFound("");
-        // }
     }
 }

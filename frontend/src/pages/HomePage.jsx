@@ -3,7 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import { indexToCategory } from "../utils/utils";
+
 
 const Container = styled.div`
   display: flex;

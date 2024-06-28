@@ -90,7 +90,7 @@ function AddPage({ categories }) {
         .catch("failed to add movie");
       console.log(data);
 
-      //add to empty movie
+      
     } catch (error) {
       console.log(error);
     }
@@ -98,13 +98,13 @@ function AddPage({ categories }) {
 
   return (
     <>
-      <Container className="form-container">
+      <Container>
         <Title>Add New Movie Details:</Title>
         <form onSubmit={submitHandler}>
-          <Label className="form-label">
+          <Label >
             Title:
             <Input
-              className="form-input"
+              
               type="text"
               name="Title"
               value={movie.Title}
@@ -112,10 +112,10 @@ function AddPage({ categories }) {
             />
           </Label>
           <br />
-          <Label className="form-label">
+          <Label >
             Category:
             <Select
-              className="form-input"
+              
               name="Category"
               value={movie.Category}
               onChange={handleChange}
@@ -132,10 +132,10 @@ function AddPage({ categories }) {
             <br />
           </Label>
           <br />
-          <Label className="form-label">
+          <Label >
             Rating:
             <Input
-              className="form-input"
+              
               type="number"
               name="Rating"
               value={movie.Rating}
@@ -145,7 +145,7 @@ function AddPage({ categories }) {
             />
           </Label>
           <br />
-          <SubmitBtn type="submit" className="form-button">
+          <SubmitBtn type="submit" >
             Submit
           </SubmitBtn>
         </form>

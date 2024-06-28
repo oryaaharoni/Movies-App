@@ -48,8 +48,7 @@ const BackBtn = styled.button`
 
 function Card({ item, categories }) {
   const [edit, setEdit] = useState(false);
-  console.log({ item });
-  console.log({ categories });
+
   const deleteHandler = async () => {
     try {
       const { data } = await axios
@@ -68,7 +67,7 @@ function Card({ item, categories }) {
       <Container>
         <Image src="https://img.freepik.com/free-vector/cinema-realistic-poster-with-illuminated-bucket-popcorn-drink-3d-glasses-reel-tickets-blue-background-with-tapes-vector-illustration_1284-77070.jpg" />
         <h2>{item.title}</h2>
-        <h3>{indexToCategory(categories, item.category)}</h3>
+        <h3>Category: {indexToCategory(categories, item.category)}</h3>
         <p>
           Rating: <strong style={{ color: "green" }}>{item.rating}</strong>
         </p>
@@ -94,5 +93,8 @@ function Card({ item, categories }) {
     </div>
   );
 }
-Card.propTypes = { item: PropTypes.object };
+Card.propTypes = {
+  item: PropTypes.object,
+  categories: PropTypes.array,
+};
 export default Card;

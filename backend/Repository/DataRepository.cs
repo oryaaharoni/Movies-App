@@ -28,7 +28,6 @@ namespace backend.Repository
             {
                 Console.WriteLine("file not found");
                 return null;
-                // return new List<Movie>();
             }
         }
 

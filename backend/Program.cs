@@ -21,9 +21,6 @@ app.UseCors(option=> option.WithOrigins("*").AllowAnyMethod().AllowAnyHeader());
 
 app.MapControllers();
 
-// app.UseHttpsRedirection();
-
-
 app.Run();
 
 

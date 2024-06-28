@@ -10,7 +10,6 @@ namespace backend.Services
     public class MovieService
     {
         private readonly DataRepository _dataRepository;
-        // private static int _counter = 12;
         public MovieService(DataRepository dataRepository)
         {
             _dataRepository = dataRepository;
@@ -26,7 +25,6 @@ namespace backend.Services
             List<Movie> movies = _dataRepository.readFromJson();
             if (movies.Any(m => m.Title == movie.Title))
             {
-                //if movie is already existing
                 return null;
             }
 
@@ -39,7 +37,6 @@ namespace backend.Services
         }
 
 
-        //check here the enum
         public Movie UpdateMovie(Movie updateMovie)
         {
             var movies = _dataRepository.readFromJson();
@@ -47,7 +44,6 @@ namespace backend.Services
             if (currentMovieIndex < 0) return null;
 
             movies[currentMovieIndex].Title = updateMovie.Title;
-            // movies[currentMovieIndex].Category = updateMovie.Category;
             movies[currentMovieIndex].Category = ConvertToEnumCategory(updateMovie.Category.ToString());
             movies[currentMovieIndex].Rating = updateMovie.Rating;
 
@@ -70,9 +66,6 @@ namespace backend.Services
 
         private Category ConvertToEnumCategory(string category)
         {
-            
-            // Category c = (Category)Enum.Parse(typeof(Category), category);
-            // return c;
             if (Enum.TryParse(category, true, out Category movieCategory))
             {
                 return movieCategory;

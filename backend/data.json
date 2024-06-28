@@ -55,38 +55,8 @@
   },
   {
     "Id": "0a2f18d9-7e8e-4f6e-9e9f-7e1f2a0a9d0f",
-    "Title": "The Lord of the Rings: The Fellowship of the Ring",
+    "Title": "The Lord of the Rings",
     "Category": 0,
     "Rating": 9
   },
-  {
-    "Id": "45e0fa6b-e278-453f-997a-0c1472ceca57",
-    "Title": "saaa",
-    "Category": 2,
-    "Rating": 2
-  },
-  {
-    "Id": "5674b7e0-bec7-4dfb-92fc-6ef673ef7fe7",
-    "Title": "ddddddd",
-    "Category": 3,
-    "Rating": 2
-  },
-  {
-    "Id": "1049c308-c161-4646-ae93-0083b1c5a376",
-    "Title": "dddddd",
-    "Category": 5,
-    "Rating": 2
-  },
-  {
-    "Id": "6ec1638f-72f4-4630-b993-7f772aa748ff",
-    "Title": "wssssssssssss",
-    "Category": 1,
-    "Rating": 2
-  },
-  {
-    "Id": "af98a961-5917-4ad5-8132-7756e491aa2a",
-    "Title": "sssssssss",
-    "Category": 3,
-    "Rating": 2
-  }
 ]

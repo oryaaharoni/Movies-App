@@ -11,7 +11,7 @@ const Navbar = styled.div`
 const Name = styled.a`
   text-decoration: none;
   color: white;
-  font-family: math;
+  font-family: cursive;
 
   &:hover {
     color: #799ac5;
@@ -21,9 +21,7 @@ const Name = styled.a`
 function NavBar() {
   return (
     <Navbar>
-      <Name className="active" href="/">
-        Home
-      </Name>
+      <Name href="/">Home</Name>
       <Name href="/add-movie">Add Movie</Name>
     </Navbar>
   );
