@@ -1,9 +1,64 @@
-import "./AddPage.css";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import styled from "styled-components";
+
+const Container = styled.div`
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+`;
+
+const Title = styled.h1`
+    text-align: center;
+    margin-bottom: 20px;
+`;
+
+const Label = styled.label`
+    display: block;
+    margin-bottom: 15px;
+    font-weight: bold;
+`;
+
+const Input = styled.input`
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+`;
+
+const Select = styled.select`
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+`;
+
+const SubmitBtn = styled.button`
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+
+    &:hover {
+        background-color: #45a049;
+    }
+`;
 
 function AddPage() {
-  
   const [categories, setCategories] = useState([]);
 
   const [movie, setMovie] = useState({
@@ -12,14 +67,12 @@ function AddPage() {
     Rating: "",
   });
 
-  
   useEffect(() => {
     const fetchCategories = async () => {
       try {
         const { data } = await axios.get("Movie/categories");
         setCategories(data);
-      } 
-      catch (error) {
+      } catch (error) {
         console.error("Error fetching categories:", error);
       }
     };
@@ -35,54 +88,51 @@ function AddPage() {
   };
 
   const findIndexCategory = () => {
-    const index = categories.findIndex((c) => c === movie.Category);
+    const index = categories.findIndex((c) => c == movie.Category);
     movie.Category = index;
   };
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    // console.log(movie.Title);
-    // console.log(movie.Category);
-    // console.log(movie.Rating);
-    
     findIndexCategory();
 
     try {
-      const { data } = await axios.post("Movie", {
+      const { data } = await axios
+        .post("Movie", {
           Title: movie.Title,
           Category: movie.Category,
           Rating: parseInt(movie.Rating, 10),
         })
-        // .then(alert("Movie added successfully"))
-        // .catch("failed to add movie");
+        .then(alert("Movie added successfully"))
+        .catch("failed to add movie");
       console.log(data);
-      
 
-        //add to empty movie
-    } 
-    catch (error) {
+      //add to empty movie
+    } catch (error) {
       console.log(error);
     }
   };
 
   return (
     <>
-      <div className="form-container">
-        <h1>Add New Movie Details:</h1>
+      <Container className="form-container">
+        <Title>Add New Movie Details:</Title>
         <form onSubmit={submitHandler}>
-          <label className="form-label">
+          <Label className="form-label">
             Title:
-            <input className="form-input"
+            <Input
+              className="form-input"
               type="text"
               name="Title"
               value={movie.Title}
               onChange={handleChange}
             />
-          </label>
+          </Label>
           <br />
-          <label className="form-label">
+          <Label className="form-label">
             Category:
-            <select className="form-input"
+            <Select
+              className="form-input"
               name="Category"
               value={movie.Category}
               onChange={handleChange}
@@ -95,13 +145,14 @@ function AddPage() {
                   {category}
                 </option>
               ))}
-            </select>
+            </Select>
             <br />
-          </label>
+          </Label>
           <br />
-          <label className="form-label">
+          <Label className="form-label">
             Rating:
-            <input className="form-input"
+            <Input
+              className="form-input"
               type="number"
               name="Rating"
               value={movie.Rating}
@@ -109,11 +160,13 @@ function AddPage() {
               min="1"
               max="10"
             />
-          </label>
+          </Label>
           <br />
-          <button type="submit" className="form-button">Submit</button>
+          <SubmitBtn type="submit" className="form-button">
+            Submit
+          </SubmitBtn>
         </form>
-      </div>
+      </Container>
     </>
   );
 }

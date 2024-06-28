@@ -40,17 +40,24 @@ const Buttons = styled.div`
   gap: 15px;
 `;
 
+const BackBtn = styled.button`
+   background-color: #ababab;
+   border-radius: 5px;
+`;
+
 function Card({ item }) {
   const [edit, setEdit] = useState(false);
 
   const deleteHandler = async () => {
     console.log(item.id);
     try {
-      const { data } = await axios.delete(`Movie/${item.id}`);
-      // .then(alert('Movie deleted successfully'))
-      // .catch('failed to delete movie');
+      const { data } = await axios.delete(`Movie/${item.id}`)
+      .then(alert('Movie deleted successfully'))
+      .catch('failed to delete movie');
+
       console.log(data);
-    } catch (error) {
+    } 
+    catch (error) {
       console.log(error);
     }
   };
@@ -80,7 +87,7 @@ function Card({ item }) {
 
   return (
     <div>
-      {edit && <button onClick={() => setEdit(!edit)}>Back</button>}
+      {edit && <BackBtn onClick={() => setEdit(!edit)}>Back</BackBtn>}
       {!edit && renderCard()}
       {edit && <EditForm item={item} />}
     </div>

@@ -1,56 +1,93 @@
 import PropTypes from "prop-types";
-// import "./EditForm.css";
 import { useRef } from "react";
 import axios from "axios";
 import styled from "styled-components";
+import { useEffect, useState } from "react";
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 5px;
   padding: 25px;
-  /* background-color: #ffffff; */
   border-radius: 5px;
   font-family: cursive;
   flex: 0 1 24%;
   border: 2px solid lightgray;
   align-items: center;
   width: 20rem;
-  
-  /* height:50%; */
 `;
 
-const EditBtn = styled.div`
-  background-color: #ff7878;
-  border-radius: 5px;
-  width: 28%;
-  padding: 2px;
-  
+const Label = styled.label`
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
 `;
 
-// const EditBtn = styled.div`
-//   background-color: #ff7878;
-//   border-radius: 5px;
-//   width: 28%;
-//   padding: 2px;
-  
-// `;
-// const findIndexCategory = () => {
-//   console.log("categories : ", categories);
-//   const index = categories.findIndex((c) => c === movie.Category);
-//   console.log("i: ", index);
-//   movie.Category = index;
-// };
+const Input = styled.input`
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0 20px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+`;
 
+const Select = styled.select`
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0 20px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+`;
+
+const EditBtn = styled.button`
+  width: 100%;
+  background-color: #4caf50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+
+  &:hover {
+    background-color: #45a049;
+  }
+`;
 
 function EditForm({ item }) {
+  const [categories, setCategories] = useState([]);
+
   const titleRef = useRef(item.title);
   const categoryRef = useRef(item.category);
   const ratingRef = useRef(item.rating);
 
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const { data } = await axios.get("Movie/categories");
+        setCategories(data);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+    fetchCategories();
+  }, []);
+
+  const findIndexCategory = (categoryName) => {
+    const index = categories.findIndex((c) => c === categoryName);
+    return index;
+  };
+
   const editHandler = async (e) => {
     e.preventDefault();
 
+    findIndexCategory(categoryRef.current.value);
+    console.log(categoryRef.current.value);
     try {
       const { data } = await axios
         .put("Movie", {
@@ -67,25 +104,23 @@ function EditForm({ item }) {
     }
   };
 
-  var categories = ["wwe", "sas", "fffg"];
-
   return (
     <>
       <Container>
         <form onSubmit={editHandler}>
-          <label>
+          <Label>
             Title:
-            <input
+            <Input
               type="text"
               name="title"
               ref={titleRef}
               defaultValue={item.title}
             />
-          </label>
+          </Label>
           <br />
-          <label>
+          <Label>
             Category:
-            <select
+            <Select
               name="subject"
               id="subject"
               ref={categoryRef}
@@ -97,13 +132,13 @@ function EditForm({ item }) {
                   {category}
                 </option>
               ))}
-            </select>
+            </Select>
             <br />
-          </label>
+          </Label>
           <br />
-          <label>
+          <Label>
             Rating:
-            <input
+            <Input
               type="number"
               name="rating"
               ref={ratingRef}
@@ -111,7 +146,7 @@ function EditForm({ item }) {
               min="1"
               max="10"
             />
-          </label>
+          </Label>
           <br />
           <EditBtn type="submit">Submit</EditBtn>
         </form>
