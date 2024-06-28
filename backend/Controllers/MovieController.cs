@@ -67,15 +67,15 @@ namespace backend.Controllers
             return Ok(categories);
         }
 
-        [HttpGet("{category}")]
-        public ActionResult<string> ConvertToEnumCategory(string category)
-        {
-            var categories = Enum.GetNames(typeof(Category)).ToList();
-            if (categories.Any(c => c == category)){
+        // [HttpGet("{category}")]
+        // public ActionResult<string> ConvertToEnumCategory(string category)
+        // {
+        //     var categories = Enum.GetNames(typeof(Category)).ToList();
+        //     if (categories.Any(c => c == category)){
                 
-                return Ok(category);
-            }
-            else return NotFound(""); 
-        }
+        //         return Ok(category);
+        //     }
+        //     else return NotFound(""); 
+        // }
     }
 }
