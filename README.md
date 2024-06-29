@@ -20,13 +20,13 @@ git clone https://github.com/oryaaharoni/movies-app.git .<br>
 cd movies-app
 
 * [x] Backend Setup (ASP.NET Core):<br>
-Open the backend project folder.
-dotnet restore
+Open the backend project folder.<br>
+dotnet restore<br>
 dotnet run
 
 * [x] Frontend Setup:<br>
-Open the frontend project folder.
-npm install
+Open the frontend project folder.<br>
+npm install<br>
 npm start
 
 ### Data Storage
