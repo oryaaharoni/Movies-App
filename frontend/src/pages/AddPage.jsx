@@ -1,8 +1,11 @@
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import styled from "styled-components";
 import { findIndexCategory } from "../utils/utils";
 import PropTypes from "prop-types";
+import { Store } from "../store";
+import { useNavigate } from "react-router-dom";
+
 
 const Container = styled.div`
   max-width: 600px;
@@ -61,6 +64,9 @@ const SubmitBtn = styled.button`
 `;
 
 function AddPage({ categories }) {
+  const { state, dispatch: ctxDispatch } = useContext(Store);
+  const navigate = useNavigate();
+
   const [movie, setMovie] = useState({
     Title: "",
     Category: "",
@@ -80,17 +86,14 @@ function AddPage({ categories }) {
     const cagtIndex = findIndexCategory(categories, movie.Category);
 
     try {
-      const { data } = await axios
-        .post("Movie", {
-          Title: movie.Title,
-          Category: cagtIndex,
-          Rating: parseInt(movie.Rating, 10),
-        })
-        .then(alert("Movie added successfully"))
-        .catch("failed to add movie");
+      const { data } = await axios.post("Movie", {
+        Title: movie.Title,
+        Category: cagtIndex,
+        Rating: parseInt(movie.Rating, 10),
+      });
+      await ctxDispatch({ type: "ADD_ITEM", payload: data });
       console.log(data);
-
-      
+      navigate("/");
     } catch (error) {
       console.log(error);
     }
@@ -98,24 +101,24 @@ function AddPage({ categories }) {
 
   return (
     <>
+    <Title title="Add Movie Page"></Title>
       <Container>
         <Title>Add New Movie Details:</Title>
         <form onSubmit={submitHandler}>
-          <Label >
+          <Label>
             Title:
             <Input
-              
               type="text"
               name="Title"
               value={movie.Title}
               onChange={handleChange}
+              minLength={2}
             />
           </Label>
           <br />
-          <Label >
+          <Label>
             Category:
             <Select
-              
               name="Category"
               value={movie.Category}
               onChange={handleChange}
@@ -132,10 +135,9 @@ function AddPage({ categories }) {
             <br />
           </Label>
           <br />
-          <Label >
+          <Label>
             Rating:
             <Input
-              
               type="number"
               name="Rating"
               value={movie.Rating}
@@ -145,9 +147,7 @@ function AddPage({ categories }) {
             />
           </Label>
           <br />
-          <SubmitBtn type="submit" >
-            Submit
-          </SubmitBtn>
+          <SubmitBtn type="submit">Submit</SubmitBtn>
         </form>
       </Container>
     </>

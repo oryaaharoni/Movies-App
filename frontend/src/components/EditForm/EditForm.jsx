@@ -1,8 +1,9 @@
 import PropTypes from "prop-types";
-import { useRef } from "react";
+import { useContext, useEffect, useRef } from "react";
 import axios from "axios";
 import styled from "styled-components";
-import { findIndexCategory } from "../../utils/utils";
+import { findIndexCategory, indexToCategory } from "../../utils/utils";
+import { Store } from "../../store";
 
 const Container = styled.div`
   display: flex;
@@ -59,27 +60,43 @@ const EditBtn = styled.button`
   }
 `;
 
-function EditForm({ item, categories }) {
+function EditForm({ item, categories ,refreshData}) {
+  const { state, dispatch: ctxDispatch } = useContext(Store);
+   
+
+  useEffect(() =>{
+    console.log(item.category)
+    var itemCtgName = indexToCategory(categories, item.category);
+    console.log(itemCtgName)
+  },[]);
+
   const titleRef = useRef(item.title);
   const categoryRef = useRef(item.category);
   const ratingRef = useRef(item.rating);
 
+  
   const editHandler = async (e) => {
+
     e.preventDefault();
 
     const ctgIndex = findIndexCategory(categories, categoryRef.current.value);
-
+    
     try {
+      console.log(titleRef.current.value)
+      console.log(ctgIndex)
+      console.log(ratingRef.current.value)
+
       const { data } = await axios
         .put("Movie", {
           Id: item.id,
           Title: titleRef.current.value,
           Category: ctgIndex,
           Rating: parseInt(ratingRef.current.value, 10),
-        })
-        .then(alert("Movie edited successfully"))
-        .catch("failed to change movie");
+        });
       console.log(data);
+      ctxDispatch({ type: 'REFRESH_ITEM', payload: item });
+      refreshData();
+   
     } catch (error) {
       console.log(error);
     }
@@ -96,6 +113,7 @@ function EditForm({ item, categories }) {
               name="title"
               ref={titleRef}
               defaultValue={item.title}
+              minLength={2}
             />
           </Label>
           <br />
@@ -107,7 +125,6 @@ function EditForm({ item, categories }) {
               ref={categoryRef}
               defaultValue={item.category}
             >
-              <option selected="selected">{item.category}</option>
               {categories.map((category, index) => (
                 <option value={category} key={index}>
                   {category}
@@ -139,6 +156,7 @@ function EditForm({ item, categories }) {
 EditForm.propTypes = {
   item: PropTypes.object.isRequired,
   categories: PropTypes.array,
+  refreshData: PropTypes.func.isRequired,
 };
 
 export default EditForm;

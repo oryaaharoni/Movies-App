@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import EditForm from "../EditForm/EditForm";
 import axios from "axios";
-
 import styled from "styled-components";
 import { indexToCategory } from "../../utils/utils";
+import { Store } from "../../store";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
   display: flex;
@@ -46,18 +47,23 @@ const BackBtn = styled.button`
   border-radius: 5px;
 `;
 
-function Card({ item, categories }) {
+function Card({ item, categories , refreshData }) {
+  const { state, dispatch: ctxDispatch } = useContext(Store);
+  const navigate = useNavigate(); 
+
   const [edit, setEdit] = useState(false);
 
   const deleteHandler = async () => {
     try {
       const { data } = await axios
-        .delete(`Movie/${item.id}`)
-        .then(alert("Movie deleted successfully"))
-        .catch("failed to delete movie");
-
+        .delete(`Movie/${item.id}`);
       console.log(data);
-    } catch (error) {
+
+      ctxDispatch({ type: 'REMOVE_ITEM', payload: item });
+      refreshData();
+      navigate("/");
+    } 
+    catch (error) {
       console.log(error);
     }
   };
@@ -89,12 +95,13 @@ function Card({ item, categories }) {
     <div>
       {edit && <BackBtn onClick={() => setEdit(!edit)}>Back</BackBtn>}
       {!edit && renderCard()}
-      {edit && <EditForm item={item} />}
+      {edit && <EditForm item={item} categories={categories} refreshData={refreshData}/>}
     </div>
   );
 }
 Card.propTypes = {
   item: PropTypes.object,
   categories: PropTypes.array,
+  refreshData: PropTypes.func.isRequired,
 };
 export default Card;

@@ -21,7 +21,7 @@
     "Id": "4e7a1c2b-6e4f-4f2c-9b5d-3e6b1a8c7d9f",
     "Title": "The Matrix",
     "Category": 5,
-    "Rating": 3
+    "Rating": 9
   },
   {
     "Id": "5f7b13a6-2e5d-4b4f-8c4d-2e5f1d6c9a7e",
@@ -33,12 +33,6 @@
     "Id": "6a7d14e8-3e5a-4c4d-9a5e-3e6d1c8b7a5d",
     "Title": "Pulp Fiction",
     "Category": 2,
-    "Rating": 10
-  },
-  {
-    "Id": "7b8e15a9-4e5b-4d4c-9b6f-4e7e1d7a9c6f",
-    "Title": "The Shawshank Redemption",
-    "Category": 0,
     "Rating": 10
   },
   {
@@ -58,5 +52,5 @@
     "Title": "The Lord of the Rings",
     "Category": 0,
     "Rating": 9
-  },
+  }
 ]

@@ -1,9 +1,10 @@
 import Card from "../components/Card/Card";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState, useCallback } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-
+import { Store } from "../store";
+import Title from "../components/shared/Title";
 
 const Container = styled.div`
   display: flex;
@@ -14,26 +15,40 @@ const Container = styled.div`
 `;
 
 function HomePage({ categories }) {
+  const { state, dispatch: ctxDispatch } = useContext(Store);
+
   const [movies, setMovies] = useState([]);
 
-  const getData = async () => {
+  const getData = useCallback(async () => {
+    ctxDispatch({ type: "GET_REQUEST" });
     try {
       const { data } = await axios.get("Movie");
       const sortedMovies = data.sort((a, b) => b.rating - a.rating);
       setMovies(sortedMovies);
+
+      ctxDispatch({ type: "MOVIES", payload: sortedMovies });
     } catch (error) {
       console.log(error);
+      ctxDispatch({ type: "GET_FAIL", payload: error.message });
     }
-  };
+  }, [ctxDispatch]);
 
   useEffect(() => {
     getData();
-  }, []);
+  }, [getData]);
 
   return (
     <Container>
+      <Title title="Home Page"></Title>
       {movies.map((movie, index) => {
-        return <Card item={movie} key={index} categories={categories}></Card>;
+        return (
+          <Card
+            item={movie}
+            key={index}
+            categories={categories}
+            refreshData={getData}
+          ></Card>
+        );
       })}
     </Container>
   );

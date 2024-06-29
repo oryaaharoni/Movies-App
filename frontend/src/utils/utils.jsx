@@ -4,10 +4,7 @@ export const findIndexCategory = (categories, categoryName) => {
 };
 
 export const indexToCategory = (categories, index) => {
-  console.log("indexToCategory");
-  console.log({ categories });
-  console.log({ index });
+  
   const category = categories[index];
-  console.log({ category });
   return category;
 };
