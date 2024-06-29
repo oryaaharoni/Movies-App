@@ -12,7 +12,7 @@ This repository demonstrates a basic __web application using ASP.NET Core Web AP
 ### Prerequisites
 - _.NET Core SDK_
 - _Node.js and npm for React Vite_
--_Visual Studio Code or any other platform_
+- _Visual Studio Code or any other platform_
 
 ### Installation
 * [x] Clone the repository:<br>
