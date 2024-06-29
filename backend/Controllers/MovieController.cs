@@ -31,7 +31,6 @@ namespace backend.Controllers
         {
             if (movie == null)
             {
-
                 return BadRequest("Movie cannot be null");
             }
             var m = _movieService.AddMovie(movie);
@@ -46,7 +45,7 @@ namespace backend.Controllers
             if (movie == null) return BadRequest("movie cannot be null");
 
             var updateMovie = _movieService.UpdateMovie(movie);
-            if (updateMovie == null) return NotFound();
+            if (updateMovie == null) return Conflict("Movie already exists");
             else return Ok(updateMovie);
         }
 

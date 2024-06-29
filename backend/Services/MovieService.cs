@@ -39,7 +39,13 @@ namespace backend.Services
 
         public Movie UpdateMovie(Movie updateMovie)
         {
-            var movies = _dataRepository.readFromJson();
+            List<Movie> movies = _dataRepository.readFromJson();
+            if (movies.Any(m => m.Title == updateMovie.Title))
+            {
+                return null;
+            }
+
+            // var movies = _dataRepository.readFromJson();
             var currentMovieIndex = movies.FindIndex((m) => m.Id == updateMovie.Id);
             if (currentMovieIndex < 0) return null;
 

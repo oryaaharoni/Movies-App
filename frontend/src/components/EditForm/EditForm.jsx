@@ -99,6 +99,7 @@ function EditForm({ item, categories ,refreshData}) {
    
     } catch (error) {
       console.log(error);
+      alert("Movie Is Already Exists");
     }
   };
 

@@ -21,7 +21,7 @@
     "Id": "4e7a1c2b-6e4f-4f2c-9b5d-3e6b1a8c7d9f",
     "Title": "The Matrix",
     "Category": 5,
-    "Rating": 3
+    "Rating": 9
   },
   {
     "Id": "5f7b13a6-2e5d-4b4f-8c4d-2e5f1d6c9a7e",
@@ -54,15 +54,9 @@
     "Rating": 9
   },
   {
-    "Id": "bd1aae28-6ee6-4d21-a761-7362e21ece23",
-    "Title": "fffffffffffff",
-    "Category": 2,
-    "Rating": 3
-  },
-  {
-    "Id": "5a03c407-71b6-4f9f-b8f1-2f4ad81fd204",
-    "Title": "5555",
-    "Category": 5,
-    "Rating": 9
+    "Id": "d5d902de-ade8-44d8-bdb6-723bb3c467db",
+    "Title": "The Dark Knight",
+    "Category": 0,
+    "Rating": 1
   }
 ]

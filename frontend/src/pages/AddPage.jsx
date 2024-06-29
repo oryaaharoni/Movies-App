@@ -96,6 +96,7 @@ function AddPage({ categories }) {
       navigate("/");
     } catch (error) {
       console.log(error);
+      alert("Movie Is Already Exists");
     }
   };
 
